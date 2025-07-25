@@ -1,0 +1,4 @@
+// app/snippet-demo/page.tsx
+export default function SnippetDemoPage() {
+  return <div>Snippet demo placeholder</div>;
+}
