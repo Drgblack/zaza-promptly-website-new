@@ -121,12 +121,12 @@ export function BlogSection() {
   const [isVisible, setIsVisible] = useState(false)
 
   const categories = [
-    { id: "all", name: "All Posts", count: blogPosts.length },
-    { id: "Technology", name: "Technology", count: blogPosts.filter(post => post.category === "Technology").length },
-    { id: "Teaching Tips", name: "Teaching Tips", count: blogPosts.filter(post => post.category === "Teaching Tips").length },
-    { id: "AI in Education", name: "AI in Education", count: blogPosts.filter(post => post.category === "AI in Education").length },
-    { id: "Productivity", name: "Productivity", count: blogPosts.filter(post => post.category === "Productivity").length },
-    { id: "Communication", name: "Communication", count: blogPosts.filter(post => post.category === "Communication").length },
+    { id: "all", name: "All Posts", count: blogPosts?.length },
+    { id: "Technology", name: "Technology", count: blogPosts?.filter(post => post.category === "Technology").length },
+    { id: "Teaching Tips", name: "Teaching Tips", count: blogPosts?.filter(post => post.category === "Teaching Tips").length },
+    { id: "AI in Education", name: "AI in Education", count: blogPosts?.filter(post => post.category === "AI in Education").length },
+    { id: "Productivity", name: "Productivity", count: blogPosts?.filter(post => post.category === "Productivity").length },
+    { id: "Communication", name: "Communication", count: blogPosts?.filter(post => post.category === "Communication").length },
   ]
 
   useEffect(() => {

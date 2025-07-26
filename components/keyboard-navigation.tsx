@@ -105,31 +105,31 @@ export function useFocusManagement() {
   }
 
   const focusNext = () => {
-    if (focusHistory.length === 0) return
+    if (focusHistory?.length === 0) return
     
-    const nextIndex = (currentFocusIndex + 1) % focusHistory.length
+    const nextIndex = (currentFocusIndex + 1) % focusHistory?.length
     setCurrentFocusIndex(nextIndex)
     focusHistory[nextIndex]?.focus()
   }
 
   const focusPrevious = () => {
-    if (focusHistory.length === 0) return
+    if (focusHistory?.length === 0) return
     
-    const prevIndex = currentFocusIndex <= 0 ? focusHistory.length - 1 : currentFocusIndex - 1
+    const prevIndex = currentFocusIndex <= 0 ? focusHistory?.length - 1 : currentFocusIndex - 1
     setCurrentFocusIndex(prevIndex)
     focusHistory[prevIndex]?.focus()
   }
 
   const focusFirst = () => {
-    if (focusHistory.length > 0) {
+    if (focusHistory?.length > 0) {
       setCurrentFocusIndex(0)
       focusHistory[0]?.focus()
     }
   }
 
   const focusLast = () => {
-    if (focusHistory.length > 0) {
-      const lastIndex = focusHistory.length - 1
+    if (focusHistory?.length > 0) {
+      const lastIndex = focusHistory?.length - 1
       setCurrentFocusIndex(lastIndex)
       focusHistory[lastIndex]?.focus()
     }

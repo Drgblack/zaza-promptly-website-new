@@ -26,7 +26,7 @@ import {
   Filter,
   Download,
   Upload,
-  Sync,
+  RefreshCw,
   CheckCircle,
   AlertCircle,
   Clock
@@ -232,7 +232,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
             disabled={isSyncing}
             className="flex items-center gap-2"
           >
-            <Sync className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
             {isSyncing ? 'Syncing...' : 'Sync'}
           </Button>
           <Button
@@ -279,7 +279,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
-                Contacts ({filteredContacts.length})
+                Contacts ({filteredContacts?.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -316,16 +316,16 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
                         </div>
                       </div>
                     </div>
-                    {contact.tags.length > 0 && (
+                    {contact.tags?.length > 0 && (
                       <div className="flex flex-wrap gap-1 mt-2">
                         {contact.tags.slice(0, 2).map((tag) => (
                           <Badge key={tag} variant="outline" className="text-xs">
                             {tag}
                           </Badge>
                         ))}
-                        {contact.tags.length > 2 && (
+                        {contact.tags?.length > 2 && (
                           <Badge variant="outline" className="text-xs">
-                            +{contact.tags.length - 2}
+                            +{contact.tags?.length - 2}
                           </Badge>
                         )}
                       </div>

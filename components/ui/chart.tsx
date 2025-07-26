@@ -73,7 +73,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     ([_, config]) => config.theme || config.color
   )
 
-  if (!colorConfig.length) {
+  if (!colorConfig?.length) {
     return null
   }
 
@@ -174,7 +174,7 @@ const ChartTooltipContent = React.forwardRef<
       return null
     }
 
-    const nestLabel = payload.length === 1 && indicator !== "dot"
+    const nestLabel = payload?.length === 1 && indicator !== "dot"
 
     return (
       <div
@@ -241,7 +241,7 @@ const ChartTooltipContent = React.forwardRef<
                       </div>
                       {item.value && (
                         <span className="font-mono font-medium tabular-nums text-foreground">
-                          {formatNumber(item.value)}
+                          {formatNumber(Number(item.value))}
                         </span>
                       )}
                     </div>

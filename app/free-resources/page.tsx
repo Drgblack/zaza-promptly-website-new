@@ -1,3 +1,5 @@
+"use client"
+
 import { SEOHead } from "@/components/seo-head"
 import { SkipLink } from "@/components/skip-link"
 import { AccessibilityAnnouncer } from "@/components/accessibility-announcer"

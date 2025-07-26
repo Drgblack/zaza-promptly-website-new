@@ -402,6 +402,14 @@ export function SEOHead({
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "Contact", url: "https://zazapromptly.com/contact" }
       ],
+      waitlist: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Waitlist", url: "https://zazapromptly.com/waitlist" }
+      ],
+      blog: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Blog", url: "https://zazapromptly.com/blog" }
+      ],
       faqs: [
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "FAQs", url: "https://zazapromptly.com/faqs" }
@@ -409,6 +417,14 @@ export function SEOHead({
       support: [
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "Support", url: "https://zazapromptly.com/support" }
+      ],
+      privacy: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Privacy Policy", url: "https://zazapromptly.com/privacy" }
+      ],
+      terms: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Terms of Service", url: "https://zazapromptly.com/terms" }
       ],
       "free-resources": [
         { name: "Home", url: "https://zazapromptly.com" },

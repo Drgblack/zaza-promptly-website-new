@@ -2,6 +2,17 @@
 
 import { useEffect } from "react"
 
+// Type definitions for Performance API
+interface LayoutShift extends PerformanceEntry {
+  value: number
+  hadRecentInput: boolean
+}
+
+interface PerformanceEventTiming extends PerformanceEntry {
+  processingStart: number
+  startTime: number
+}
+
 interface PerformanceMetrics {
   lcp: number
   fid: number
@@ -48,15 +59,17 @@ export function PerformanceMonitor() {
           sendMetric("LCP", entry.startTime)
         }
         if (entry.entryType === "first-input") {
-          metrics.fid = entry.processingStart - entry.startTime
+          const firstInputEntry = entry as PerformanceEventTiming
+          metrics.fid = firstInputEntry.processingStart - firstInputEntry.startTime
           console.log("FID:", metrics.fid)
           sendMetric("FID", metrics.fid)
         }
         if (entry.entryType === "layout-shift") {
-          if (!entry.hadRecentInput) {
-            metrics.cls += entry.value
-            console.log("CLS:", entry.value, "Total:", metrics.cls)
-            sendMetric("CLS", entry.value)
+          const layoutShiftEntry = entry as LayoutShift
+          if (!layoutShiftEntry.hadRecentInput) {
+            metrics.cls += layoutShiftEntry.value
+            console.log("CLS:", layoutShiftEntry.value, "Total:", metrics.cls)
+            sendMetric("CLS", layoutShiftEntry.value)
           }
         }
         if (entry.entryType === "paint") {

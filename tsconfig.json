@@ -2,10 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     },
     "types": [
-      "node"
+      "node",
+      "react"
     ],
     "target": "ES6",
     "module": "ESNext",
@@ -37,7 +40,8 @@
     "lib",
     "styles",
     "utils",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "global.d.ts"
   ],
   "exclude": [
     "node_modules"
