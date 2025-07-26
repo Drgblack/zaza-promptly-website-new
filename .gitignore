@@ -1,11 +1,24 @@
+# Dependencies
 node_modules/
+.pnpm-store/
 .next/
-out/
-.env.local
-.env.*.local
-.DS_Store
-*.log
-.vscode/
-.vercel/
+turbo/
 
-.vercel
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Builds
+dist/
+build/
+
+# Env
+.env.local
+.env.production
+.env.development
+
+# VSCode
+.vscode/
