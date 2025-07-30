@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Star, ThumbsUp, ThumbsDown, MessageCircle, Send, Check } from "lucide-react"
@@ -8,7 +8,7 @@ import { Star, ThumbsUp, ThumbsDown, MessageCircle, Send, Check } from "lucide-r
 interface UserFeedbackProps {
   pageId?: string
   userId?: string
-  onFeedbackSubmit?: (feedback: FeedbackData) => void
+  // onFeedbackSubmit?: (feedback: FeedbackData) => void
 }
 
 interface FeedbackData {
@@ -21,7 +21,7 @@ interface FeedbackData {
   userId?: string
 }
 
-export function UserFeedback({ pageId = 'home', userId, onFeedbackSubmit }: UserFeedbackProps) {
+export function UserFeedback({ pageId = 'home', userId, /* onFeedbackSubmit */ }: UserFeedbackProps) {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
   const [sentiment, setSentiment] = useState<'positive' | 'negative' | 'neutral'>('neutral')
@@ -88,9 +88,9 @@ export function UserFeedback({ pageId = 'home', userId, onFeedbackSubmit }: User
       }
 
       // Call custom callback if provided
-      if (onFeedbackSubmit) {
-        onFeedbackSubmit(feedbackData)
-      }
+      // if (onFeedbackSubmit) {
+      //   onFeedbackSubmit(feedbackData)
+      // }
 
       setIsSubmitted(true)
       setTimeout(() => {
@@ -249,7 +249,7 @@ export function UserFeedback({ pageId = 'home', userId, onFeedbackSubmit }: User
 
 // Quick feedback component for simple ratings
 export function QuickFeedback({ pageId, onRating }: { pageId?: string; onRating?: (rating: number) => void }) {
-  const [rating, setRating] = useState(0)
+  const [, setRating] = useState(0)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const handleRating = async (newRating: number) => {

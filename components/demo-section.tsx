@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Copy, Check, Sparkles, Clock, Zap, Shuffle } from "lucide-react"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
 
 const toneOptions = [
   { id: "encouraging", label: "Encouraging", color: "bg-green-500" },
@@ -33,7 +34,7 @@ export function DemoSection() {
   const [sectionVisible, setSectionVisible] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const [responseTime, setResponseTime] = useState<number | null>(null)
+  // const [responseTime, setResponseTime] = useState<number | null>(null)
   const [animatedTime, setAnimatedTime] = useState<number>(0)
 
   useEffect(() => {
@@ -59,7 +60,7 @@ export function DemoSection() {
     setCopiedIndex(null)
     setError(null)
     setFeedback("")
-    setResponseTime(null)
+    // setResponseTime(null)
     const start = Date.now()
     try {
       console.log("Calling /api/generate with:", { context: inputText, tone: selectedTone });
@@ -85,7 +86,7 @@ export function DemoSection() {
       console.log("API Response:", data)
       setIsGenerating(false)
       const finalTime = Math.round((Date.now() - start) / 1000)
-      setResponseTime(finalTime)
+      // setResponseTime(finalTime)
       setFeedback(data.message || "No response generated.")
       setShowOutput(true)
       
@@ -133,7 +134,7 @@ export function DemoSection() {
   }
 
   return (
-    <section ref={sectionRef} className="relative py-20 lg:py-32 overflow-hidden">
+    <section id="snippets" ref={sectionRef} className="relative py-20 lg:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent_50%)]" />
@@ -200,11 +201,11 @@ export function DemoSection() {
                 onChange={(e) => setInputText(e.target.value)}
                 className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors resize-none text-gray-700 text-base"
                 rows={3}
-                placeholder="Describe what you've observed about the student..."
-                title="Enter your observation about a student's performance, behavior, or progress"
+                placeholder="Describe what you&apos;ve observed about the student..."
+                title="Enter your observation about a student&apos;s performance, behavior, or progress"
               />
               <div className="mt-2 text-xs text-gray-500">
-                💡 Tip: Be specific about what you've observed. Include both strengths and areas for growth.
+                💡 Tip: Be specific about what you&apos;ve observed. Include both strengths and areas for growth.
               </div>
             </div>
 
@@ -355,17 +356,28 @@ export function DemoSection() {
             <div className="bg-white rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Ready to Save Hours Every Week?</h3>
               <p className="text-gray-600 mb-6">
-                Join thousands of teachers who've already discovered their feedback superpower
+                Join thousands of teachers who&apos;ve already discovered their feedback superpower
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+                <Button 
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                  onClick={handleStripeCheckout}
+                >
                   Start Free Trial
                 </Button>
                 <Button
                   variant="outline"
                   className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-8 py-4 rounded-full bg-transparent"
+                  asChild
                 >
-                  Watch Full Demo
+                  <a 
+                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                  >
+                    Watch Full Demo
+                  </a>
                 </Button>
               </div>
             </div>

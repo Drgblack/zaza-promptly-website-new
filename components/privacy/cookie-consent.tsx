@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Settings, Shield, Cookie, Eye, EyeOff } from "lucide-react"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Settings, Shield, Cookie, Eye } from "lucide-react"
 
 interface CookiePreferences {
   necessary: boolean
@@ -16,7 +16,7 @@ interface CookiePreferences {
 }
 
 interface CookieConsentProps {
-  onPreferencesChange?: (preferences: CookiePreferences) => void
+  // onPreferencesChange?: (preferences: CookiePreferences) => void
   showSettings?: boolean
   position?: "bottom" | "top" | "modal"
 }
@@ -56,14 +56,14 @@ const cookieCategories = {
 }
 
 export function CookieConsent({ 
-  onPreferencesChange, 
+  // onPreferencesChange, 
   showSettings = true, 
   position = "bottom" 
 }: CookieConsentProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
-  const [hasConsented, setHasConsented] = useState(false)
+  // const [hasConsented, setHasConsented] = useState(false)
 
   useEffect(() => {
     // Check if user has already made a choice
@@ -75,7 +75,7 @@ export function CookieConsent({
     }
     
     if (consentStatus === "accepted") {
-      setHasConsented(true)
+      // setHasConsented(true)
     } else {
       setIsVisible(true)
     }
@@ -91,13 +91,13 @@ export function CookieConsent({
     
     setPreferences(allAccepted)
     savePreferences(allAccepted)
-    setHasConsented(true)
+    // setHasConsented(true)
     setIsVisible(false)
     
     // Enable all tracking
     enableTracking(allAccepted)
     
-    onPreferencesChange?.(allAccepted)
+    // onPreferencesChange?.(allAccepted)
   }
 
   const handleAcceptNecessary = () => {
@@ -110,25 +110,25 @@ export function CookieConsent({
     
     setPreferences(necessaryOnly)
     savePreferences(necessaryOnly)
-    setHasConsented(true)
+    // setHasConsented(true)
     setIsVisible(false)
     
     // Disable non-necessary tracking
     enableTracking(necessaryOnly)
     
-    onPreferencesChange?.(necessaryOnly)
+    // onPreferencesChange?.(necessaryOnly)
   }
 
   const handleSavePreferences = () => {
     savePreferences(preferences)
-    setHasConsented(true)
+    // setHasConsented(true)
     setShowSettingsModal(false)
     setIsVisible(false)
     
     // Apply tracking preferences
     enableTracking(preferences)
     
-    onPreferencesChange?.(preferences)
+    // onPreferencesChange?.(preferences)
   }
 
   const savePreferences = (prefs: CookiePreferences) => {

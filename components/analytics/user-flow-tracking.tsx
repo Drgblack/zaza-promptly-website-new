@@ -15,6 +15,15 @@ export function useUserFlowTracking() {
   const userFlowRef = useRef<UserFlowEvent[]>([])
   const sectionObserverRef = useRef<IntersectionObserver | null>(null)
 
+  const getSessionId = useCallback(() => {
+    let sessionId = sessionStorage.getItem("user_flow_session")
+    if (!sessionId) {
+      sessionId = `flow_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      sessionStorage.setItem("user_flow_session", sessionId)
+    }
+    return sessionId
+  }, [])
+
   const trackUserFlowEvent = useCallback((event: Omit<UserFlowEvent, "timestamp" | "sequence_number">) => {
     flowSequenceRef.current += 1
     const flowEvent: UserFlowEvent = {
@@ -46,7 +55,7 @@ export function useUserFlowTracking() {
         user_flow: userFlowRef.current.slice(-10), // Last 10 events
       }),
     }).catch(console.error)
-  }, [])
+  }, [getSessionId])
 
   const trackSectionView = useCallback(
     (sectionName: string) => {
@@ -88,15 +97,6 @@ export function useUserFlowTracking() {
     },
     [trackUserFlowEvent],
   )
-
-  const getSessionId = useCallback(() => {
-    let sessionId = sessionStorage.getItem("user_flow_session")
-    if (!sessionId) {
-      sessionId = `flow_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      sessionStorage.setItem("user_flow_session", sessionId)
-    }
-    return sessionId
-  }, [])
 
   // Set up intersection observer for automatic section tracking
   useEffect(() => {

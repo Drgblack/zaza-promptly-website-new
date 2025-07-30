@@ -61,50 +61,50 @@ export function SecurityHeaders() {
 }
 
 // Generate Content Security Policy
-function generateCSP(): string {
-  const policies = [
-    // Default source
-    "default-src 'self'",
+// function generateCSP(): string {
+//   const policies = [
+//     // Default source
+//     "default-src 'self'",
+//     
+//     // Script sources
+//     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
+//     
+//     // Style sources
+//     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+//     
+//     // Font sources
+//     "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com",
+//     
+//     // Image sources
+//     "img-src 'self' data: https: blob: https://www.google-analytics.com https://www.googletagmanager.com",
+//     
+//     // Connect sources (for API calls)
+//     "connect-src 'self' https://api.openai.com https://www.google-analytics.com https://analytics.google.com",
+//     
+//     // Frame sources
+//     "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
+//     
+//     // Object sources
+//     "object-src 'none'",
+//     
+//     // Base URI
+//     "base-uri 'self'",
+//     
+//     // Form action
+//     "form-action 'self'",
+//     
+//     // Frame ancestors (X-Frame-Options equivalent)
+//     "frame-ancestors 'self'",
+//     
+//     // Upgrade insecure requests
+//     "upgrade-insecure-requests",
     
-    // Script sources
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://js.stripe.com",
-    
-    // Style sources
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    
-    // Font sources
-    "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com",
-    
-    // Image sources
-    "img-src 'self' data: https: blob: https://www.google-analytics.com https://www.googletagmanager.com",
-    
-    // Connect sources (for API calls)
-    "connect-src 'self' https://api.openai.com https://www.google-analytics.com https://analytics.google.com",
-    
-    // Frame sources
-    "frame-src 'self' https://js.stripe.com https://hooks.stripe.com",
-    
-    // Object sources
-    "object-src 'none'",
-    
-    // Base URI
-    "base-uri 'self'",
-    
-    // Form action
-    "form-action 'self'",
-    
-    // Frame ancestors (X-Frame-Options equivalent)
-    "frame-ancestors 'self'",
-    
-    // Upgrade insecure requests
-    "upgrade-insecure-requests",
-    
-    // Block mixed content
-    "block-all-mixed-content"
-  ]
+//     // Block mixed content
+//     "block-all-mixed-content"
+//   ]
 
-  return policies.join('; ')
-}
+//   return policies.join('; ')
+// }
 
 // Security utilities
 export const SecurityUtils = {
@@ -195,44 +195,56 @@ export function useSecurityMonitoring() {
     // Monitor for suspicious network requests
     const monitorNetworkRequests = () => {
       const originalFetch = window.fetch
-      window.fetch = function(...args) {
-        const url = typeof args[0] === 'string' ? args[0] : (args[0] as Request).url
-        
-        // Check for suspicious patterns
-        if (url.includes('javascript:') || url.includes('data:text/html')) {
-          console.warn('Potential security issue: Suspicious fetch request detected')
-          reportSecurityEvent('suspicious_fetch', {
-            url,
-            location: window.location.href,
-            timestamp: new Date().toISOString()
-          })
+      
+      // Check if originalFetch exists and is callable
+      if (typeof originalFetch === 'function') {
+        window.fetch = function(...args) {
+          const url = typeof args[0] === 'string' ? args[0] : (args[0] as Request).url
+          
+          // Check for suspicious patterns
+          if (url.includes('javascript:') || url.includes('data:text/html')) {
+            console.warn('Potential security issue: Suspicious fetch request detected')
+            reportSecurityEvent('suspicious_fetch', {
+              url,
+              location: window.location.href,
+              timestamp: new Date().toISOString()
+            })
+          }
+          
+          return originalFetch.apply(this, args)
         }
-        
-        return originalFetch.apply(this, args)
+      } else {
+        console.warn('window.fetch is not available for monitoring')
       }
     }
 
     // Monitor for localStorage/sessionStorage access
     const monitorStorageAccess = () => {
       const originalSetItem = Storage.prototype.setItem
-      Storage.prototype.setItem = function(key: string, value: string) {
-        // Check for sensitive data patterns
-        const sensitivePatterns = ['password', 'token', 'secret', 'key', 'auth']
-        const isSensitive = sensitivePatterns.some(pattern => 
-          key.toLowerCase().includes(pattern) || value.toLowerCase().includes(pattern)
-        )
-        
-        if (isSensitive) {
-          console.warn('Sensitive data being stored in localStorage/sessionStorage')
-          reportSecurityEvent('sensitive_storage', {
-            key,
-            storageType: this === localStorage ? 'localStorage' : 'sessionStorage',
-            location: window.location.href,
-            timestamp: new Date().toISOString()
-          })
+      
+      // Check if originalSetItem exists and is callable
+      if (typeof originalSetItem === 'function') {
+        Storage.prototype.setItem = function(key: string, value: string) {
+          // Check for sensitive data patterns
+          const sensitivePatterns = ['password', 'token', 'secret', 'key', 'auth']
+          const isSensitive = sensitivePatterns.some(pattern => 
+            key.toLowerCase().includes(pattern) || value.toLowerCase().includes(pattern)
+          )
+          
+          if (isSensitive) {
+            console.warn('Sensitive data being stored in localStorage/sessionStorage')
+            reportSecurityEvent('sensitive_storage', {
+              key,
+              storageType: this === localStorage ? 'localStorage' : 'sessionStorage',
+              location: window.location.href,
+              timestamp: new Date().toISOString()
+            })
+          }
+          
+          return originalSetItem.call(this, key, value)
         }
-        
-        return originalSetItem.call(this, key, value)
+      } else {
+        console.warn('Storage.prototype.setItem is not available for monitoring')
       }
     }
 

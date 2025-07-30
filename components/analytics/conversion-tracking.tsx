@@ -12,6 +12,38 @@ interface ConversionEvent {
 }
 
 export function useConversionTracking() {
+  // Get or create session ID
+  const getSessionId = useCallback(() => {
+    let sessionId = sessionStorage.getItem("analytics_session_id")
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      sessionStorage.setItem("analytics_session_id", sessionId)
+    }
+    return sessionId
+  }, [])
+
+  // Custom event tracking for internal analytics
+  const trackCustomEvent = useCallback((event: ConversionEvent) => {
+    // Send to internal analytics API
+    if (typeof window !== "undefined") {
+      fetch("/api/analytics/track", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...event,
+          user_agent: navigator.userAgent,
+          page_url: window.location.href,
+          referrer: document.referrer,
+          session_id: getSessionId(),
+        }),
+      }).catch((error) => {
+        console.error("Analytics tracking error:", error)
+      })
+    }
+  }, [getSessionId])
+
   // Track primary CTA clicks
   const trackPrimaryCTA = useCallback((ctaText: string, location: string) => {
     const event: ConversionEvent = {
@@ -49,7 +81,7 @@ export function useConversionTracking() {
 
     // Custom analytics
     trackCustomEvent(event)
-  }, [])
+  }, [trackCustomEvent])
 
   // Track secondary CTA clicks
   const trackSecondaryCTA = useCallback((ctaText: string, location: string) => {
@@ -75,7 +107,7 @@ export function useConversionTracking() {
     }
 
     trackCustomEvent(event)
-  }, [])
+  }, [trackCustomEvent])
 
   // Track demo interactions
   const trackDemoInteraction = useCallback((action: string, step: string, completion_rate?: number) => {
@@ -118,7 +150,7 @@ export function useConversionTracking() {
     }
 
     trackCustomEvent(event)
-  }, [])
+  }, [trackCustomEvent])
 
   // Track email signups
   const trackEmailSignup = useCallback((source: string, email?: string) => {
@@ -152,7 +184,7 @@ export function useConversionTracking() {
     }
 
     trackCustomEvent(event)
-  }, [])
+  }, [trackCustomEvent])
 
   // Track feature interactions
   const trackFeatureInteraction = useCallback((feature: string, action: string) => {
@@ -177,39 +209,7 @@ export function useConversionTracking() {
     }
 
     trackCustomEvent(event)
-  }, [])
-
-  // Custom event tracking for internal analytics
-  const trackCustomEvent = useCallback((event: ConversionEvent) => {
-    // Send to internal analytics API
-    if (typeof window !== "undefined") {
-      fetch("/api/analytics/track", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...event,
-          user_agent: navigator.userAgent,
-          page_url: window.location.href,
-          referrer: document.referrer,
-          session_id: getSessionId(),
-        }),
-      }).catch((error) => {
-        console.error("Analytics tracking error:", error)
-      })
-    }
-  }, [])
-
-  // Get or create session ID
-  const getSessionId = useCallback(() => {
-    let sessionId = sessionStorage.getItem("analytics_session_id")
-    if (!sessionId) {
-      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      sessionStorage.setItem("analytics_session_id", sessionId)
-    }
-    return sessionId
-  }, [])
+  }, [trackCustomEvent])
 
   return {
     trackPrimaryCTA,

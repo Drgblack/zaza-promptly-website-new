@@ -289,10 +289,16 @@ export function ComparisonSection() {
                 is your teaching partner.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-10 py-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-lg">
+                <button 
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-10 py-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-lg"
+                  onClick={() => document.getElementById('snippets')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Choose Your Teaching Partner
                 </button>
-                <button className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-10 py-5 rounded-full transition-all duration-200 text-lg bg-transparent">
+                <button 
+                  className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-10 py-5 rounded-full transition-all duration-200 text-lg bg-transparent"
+                  onClick={() => document.getElementById('snippets')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   See the Difference
                 </button>
               </div>

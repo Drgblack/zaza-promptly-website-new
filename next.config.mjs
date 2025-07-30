@@ -6,6 +6,14 @@ const withBundleAnalyzer = process.env.ANALYZE === 'true'
   : (config) => config
 
 const nextConfig = {
+  // TypeScript checking
+  typescript: {
+    // Strict type checking enabled
+  },
+  // ESLint
+  eslint: {
+    // Strict linting enabled
+  },
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
@@ -14,6 +22,26 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 
   // Compression
@@ -33,16 +61,7 @@ const nextConfig = {
       'recharts',
       'date-fns',
     ],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
-
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     // Optimize bundle splitting

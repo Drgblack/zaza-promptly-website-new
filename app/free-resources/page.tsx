@@ -4,17 +4,15 @@ import { SEOHead } from "@/components/seo-head"
 import { SkipLink } from "@/components/skip-link"
 import { AccessibilityAnnouncer } from "@/components/accessibility-announcer"
 import { PerformanceMonitor } from "@/components/performance-monitor"
-import Header from "@/components/Header"
-import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
 import { 
   BookOpen, 
   Download, 
   ExternalLink, 
   FileText, 
-  Lightbulb, 
   MessageSquare, 
   Play, 
   Star, 
@@ -37,9 +35,7 @@ export default function FreeResourcesPage() {
       <AccessibilityAnnouncer />
       <PerformanceMonitor />
 
-      <Header />
-
-      <main className="min-h-screen pt-16 lg:pt-20">
+      <main className="min-h-screen">
         {/* Hero Section */}
         <section className="relative py-20 lg:py-32 overflow-hidden">
           {/* Background */}
@@ -474,14 +470,23 @@ export default function FreeResourcesPage() {
               Ready to Transform Your Teaching?
             </h2>
             <p className="text-xl text-purple-100 mb-8">
-              Join thousands of teachers who've already discovered their AI superpower
+              Join thousands of teachers who&apos;ve already discovered their AI superpower
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 font-semibold">
+              <Button 
+                size="lg" 
+                className="bg-white text-purple-600 hover:bg-gray-100 font-semibold"
+                onClick={handleStripeCheckout}
+              >
                 <Zap className="w-5 h-5 mr-2" />
                 Start Free Trial
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-purple-600"
+                onClick={() => document.getElementById('snippets')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 <Play className="w-5 h-5 mr-2" />
                 Watch Demo
               </Button>
@@ -489,8 +494,6 @@ export default function FreeResourcesPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   )
 } 

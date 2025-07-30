@@ -1,10 +1,10 @@
 export async function AnthropicStream(messages: any[]) {
   try {
     // Convert OpenAI format to Anthropic format
-    const anthropicMessages = messages.map(msg => ({
-      role: msg.role === 'system' ? 'assistant' : msg.role,
-      content: msg.content
-    }));
+    // const anthropicMessages = messages.map(msg => ({
+    //   role: msg.role === 'system' ? 'assistant' : msg.role,
+    //   content: msg.content
+    // }));
 
     // Anthropic requires the system message to be in the system field
     const systemMessage = messages.find(msg => msg.role === 'system')?.content || '';

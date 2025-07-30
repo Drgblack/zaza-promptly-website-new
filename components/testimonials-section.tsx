@@ -3,8 +3,10 @@
 import type React from "react"
 
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight, Quote, Star, Clock, Heart, MessageCircle, Users } from "lucide-react"
 import { formatNumber } from "../utils/format";
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
 
 const testimonials = [
   {
@@ -13,8 +15,7 @@ const testimonials = [
     location: "Texas",
     quote:
       "I used to dread report card season. Now I finish comments in one afternoon and spend the weekend with my kids. My principal asked what changed—I told her about Zaza Promptly.",
-    avatar:
-      "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    avatar: "/placeholder-user.jpg",
     rating: 5,
   },
   {
@@ -22,9 +23,8 @@ const testimonials = [
     role: "High School Science",
     location: "California",
     quote:
-      "Parents are commenting on how thoughtful and personal my feedback has become. Little do they know, I'm spending half the time I used to!",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+              "Parents are commenting on how thoughtful and personal my feedback has become. Little do they know, I&apos;m spending half the time I used to!",
+    avatar: "/placeholder-user.jpg",
     rating: 5,
   },
   {
@@ -32,8 +32,7 @@ const testimonials = [
     role: "Special Education",
     location: "Florida",
     quote: "Finally, feedback that honors my students' unique journeys. The IEP-aware suggestions are game-changing.",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+    avatar: "/placeholder-user.jpg",
     rating: 5,
   },
   {
@@ -41,9 +40,8 @@ const testimonials = [
     role: "Middle School Math",
     location: "New York",
     quote:
-      "My comments used to be generic. Now they're so specific that parents think I have a PhD in child psychology. It's still my voice, just... better.",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+              "My comments used to be generic. Now they&apos;re so specific that parents think I have a PhD in child psychology. It&apos;s still my voice, just... better.",
+    avatar: "/placeholder-user.jpg",
     rating: 5,
   },
 ]
@@ -241,7 +239,7 @@ export function TestimonialsSection() {
                   className={`absolute inset-0 transition-all duration-500 ${
                     index === currentIndex ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
                   }`}
-                  aria-hidden={index !== currentIndex}
+                  aria-hidden={index !== currentIndex ? "true" : "false"}
                   role="tabpanel"
                   id={`testimonial-${index}`}
                   aria-labelledby={`testimonial-tab-${index}`}
@@ -250,7 +248,7 @@ export function TestimonialsSection() {
                     <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
                       {/* Avatar */}
                       <div className="flex-shrink-0 mx-auto sm:mx-0">
-                        <img
+                        <Image
                           src={testimonial.avatar || "/placeholder-user.jpg"}
                           alt={`${testimonial.name}, ${testimonial.role} from ${testimonial.location}`}
                           className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-4 border-indigo-100 object-cover"
@@ -267,7 +265,7 @@ export function TestimonialsSection() {
                         />
 
                         <blockquote className="text-lg sm:text-xl lg:text-2xl text-gray-700 leading-relaxed mb-6 italic">
-                          "{testimonial.quote}"
+                          &quot;{testimonial.quote}&quot;
                         </blockquote>
 
                         <footer className="flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
@@ -330,7 +328,7 @@ export function TestimonialsSection() {
                 role="tab"
                 id={`testimonial-tab-${index}`}
                 aria-controls={`testimonial-${index}`}
-                aria-selected={index === currentIndex}
+                aria-selected={index === currentIndex ? "true" : "false"}
                 aria-label={`Go to testimonial ${index + 1} from ${testimonials[index].name}`}
               />
             ))}
@@ -377,10 +375,16 @@ export function TestimonialsSection() {
                 Start your free trial and see why teachers everywhere are getting their lives back
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+                <button 
+                  className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                  onClick={handleStripeCheckout}
+                >
                   Start Free Trial
                 </button>
-                <button className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-8 py-4 rounded-full transition-all duration-200 bg-transparent">
+                <button 
+                  className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-8 py-4 rounded-full transition-all duration-200 bg-transparent"
+                  onClick={() => document.getElementById('snippets')?.scrollIntoView({ behavior: 'smooth' })}
+                >
                   Read More Stories
                 </button>
               </div>

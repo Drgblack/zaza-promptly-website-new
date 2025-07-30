@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -267,7 +268,7 @@ export function BlogSection() {
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 delay-400 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}>
-          {visiblePosts.slice(selectedCategory === "all" ? 1 : 0).map((post, index) => (
+          {visiblePosts.slice(selectedCategory === "all" ? 1 : 0).map((post) => (
             <Card key={post.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
@@ -314,12 +315,12 @@ export function BlogSection() {
         <div className={`text-center mt-12 transition-all duration-1000 delay-500 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}>
-          <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 px-8 py-4">
-            <a href="/blog">
-              View All Blog Posts
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </a>
-          </Button>
+                            <Button asChild size="lg" className="bg-indigo-600 hover:bg-indigo-700 px-8 py-4">
+                    <Link href="/blog">
+                      View All Blog Posts
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  </Button>
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ export default function Support() {
           <section>
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">Get Help with Zaza Products</h2>
             <p className="text-gray-600 mb-6">
-              Need assistance with any of our products? We're here to help you succeed.
+              Need assistance with any of our products? We&apos;re here to help you succeed.
             </p>
           </section>
 

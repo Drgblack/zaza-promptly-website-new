@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { X, Zap } from "lucide-react"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
 
 export function StickyCTA() {
   const [isVisible, setIsVisible] = useState(false)
@@ -43,13 +44,11 @@ export function StickyCTA() {
 
           <div className="flex items-center space-x-2">
             <Button
-              asChild
               className="bg-white hover:bg-gray-100 text-orange-600 font-semibold px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 touch-manipulation min-h-[44px]"
+              onClick={handleStripeCheckout}
             >
-              <a href="/signup" className="flex items-center space-x-2">
-                <Zap className="w-4 h-4" />
-                <span className="text-sm">Try Free</span>
-              </a>
+              <Zap className="w-4 h-4 mr-2" />
+              <span className="text-sm">Try Free</span>
             </Button>
 
             <button

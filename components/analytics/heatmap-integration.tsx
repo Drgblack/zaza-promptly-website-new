@@ -17,8 +17,8 @@ export function HeatmapIntegration({
   hotjarId,
   crazyEggId,
   enableRecordings = true,
-  enableHeatmaps = true,
-  enableFeedback = false,
+  // enableHeatmaps = true,
+  // enableFeedback = false,
 }: HeatmapConfig) {
   useEffect(() => {
     // Initialize Hotjar

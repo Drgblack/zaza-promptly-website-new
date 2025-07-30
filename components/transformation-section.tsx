@@ -1,12 +1,14 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
+import Link from 'next/link'
 
 const benefitScenarios = [
   {
     emoji: "🌅",
     title: "Sunday Morning Coffee",
-    description: "While other teachers panic, you're enjoying breakfast with your family",
+            description: "While other teachers panic, you&apos;re enjoying breakfast with your family",
     delay: 0,
   },
   {
@@ -98,7 +100,7 @@ export function TransformationSection() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 leading-tight">
             Picture This:{" "}
             <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-yellow-600 bg-clip-text text-transparent">
-              Tomorrow's You
+              Tomorrow&apos;s You
             </span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 mx-auto rounded-full" />
@@ -159,15 +161,20 @@ export function TransformationSection() {
             <div className="bg-white rounded-3xl p-8 lg:p-10">
               <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-4">This Could Be Your Reality</h3>
               <p className="text-lg text-gray-600 mb-6">
-                Join thousands of teachers who've already transformed their teaching experience
+                Join thousands of teachers who&apos;ve already transformed their teaching experience
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+                <button 
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+                  onClick={handleStripeCheckout}
+                >
                   Start My Transformation
                 </button>
-                <button className="border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-semibold px-8 py-4 rounded-full transition-all duration-200">
-                  See Success Stories
-                </button>
+                <Link href="/testimonials">
+                  <button className="border-2 border-amber-500 text-amber-600 hover:bg-amber-50 font-semibold px-8 py-4 rounded-full transition-all duration-200">
+                    See Success Stories
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

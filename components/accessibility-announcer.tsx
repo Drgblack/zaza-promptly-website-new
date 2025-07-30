@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 interface AccessibilityAnnouncerProps {
   message?: string
@@ -30,25 +30,25 @@ export function AccessibilityAnnouncer({
   }, [])
 
   // Announce a message
-  const announceMessage = (msg: string, msgPriority: "polite" | "assertive" = "polite") => {
+  const announceMessage = useCallback((msg: string, _msgPriority: "polite" | "assertive" = "polite") => {
     setAnnouncements(prev => [...prev, msg])
     
     // Clear message after specified time
     setTimeout(() => {
       setAnnouncements(prev => prev.filter(announcement => announcement !== msg))
     }, clearAfter)
-  }
+  }, [clearAfter])
 
   // Announce message prop if provided
   useEffect(() => {
     if (message) {
       announceMessage(message, priority)
     }
-  }, [message, priority, clearAfter])
+  }, [message, priority, clearAfter, announceMessage])
 
   return (
     <div
-      aria-live={priority}
+      aria-live={priority === "assertive" ? "assertive" : "polite"}
       aria-atomic="true"
       className="sr-only"
       role="status"

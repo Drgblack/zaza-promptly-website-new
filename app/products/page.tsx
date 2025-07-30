@@ -1,8 +1,11 @@
 import { Metadata } from 'next';
 import { externalLinks } from '../../utils/linkMap';
 import { Button } from '@/components/ui/button';
+import { ScrollButton } from '@/components/scroll-button';
+import { StripeCheckoutButton } from '@/components/stripe-checkout-button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { SEOHead } from '@/components/seo-head';
 import { 
   Sparkles, 
   MessageSquare, 
@@ -143,7 +146,9 @@ const products = [
 
 export default function ProductsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <>
+      <SEOHead pageType="features" />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(120,119,198,0.1),transparent_50%)]" />
@@ -165,12 +170,17 @@ export default function ProductsPage() {
               Discover our complete collection of AI-powered tools designed to transform your teaching experience and save you hours every week.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+              <StripeCheckoutButton 
+                className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+              >
                 Start Free Trial
-              </Button>
-              <Button variant="outline" className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-8 py-4 rounded-full">
+              </StripeCheckoutButton>
+              <ScrollButton 
+                variant="outline" 
+                className="border-2 border-indigo-500 text-indigo-600 hover:bg-indigo-50 font-semibold px-8 py-4 rounded-full"
+              >
                 Watch Demo
-              </Button>
+              </ScrollButton>
             </div>
           </div>
         </div>
@@ -269,16 +279,22 @@ export default function ProductsPage() {
               Join thousands of educators who are already saving hours every week with our AI tools.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200">
+              <StripeCheckoutButton 
+                className="bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200"
+              >
                 Start Free Trial
-              </Button>
-              <Button variant="outline" className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-full">
+              </StripeCheckoutButton>
+              <ScrollButton 
+                variant="outline" 
+                className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-4 rounded-full"
+              >
                 Schedule Demo
-              </Button>
+              </ScrollButton>
             </div>
           </div>
         </div>
       </section>
     </div>
+    </>
   );
 } 

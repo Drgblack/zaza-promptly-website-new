@@ -1,3 +1,5 @@
+import { handleStripeCheckout } from "@/utils/stripe-checkout";
+
 export default function PricingPreview() {
   return (
     <section className="py-20 px-6 bg-gray-100 text-center">
@@ -8,12 +10,12 @@ export default function PricingPreview() {
       <div className="inline-block bg-white rounded-xl shadow-md p-8">
         <p className="text-3xl font-bold text-indigo-600 mb-2">€14.99 / month</p>
         <p className="text-gray-600 mb-4">Unlimited comment generation</p>
-        <a
-          href="#"
+        <button
+          onClick={handleStripeCheckout}
           className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-indigo-700 transition"
         >
           Start Free Trial
-        </a>
+        </button>
       </div>
     </section>
   );

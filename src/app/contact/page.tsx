@@ -48,7 +48,7 @@ export default function ContactForm() {
           <button type="submit" disabled={loading} style={{ background: '#7c3aed', color: 'white', padding: 8, borderRadius: 4 }}>
             {loading ? 'Sending...' : 'Send'}
           </button>
-          {success && <p style={{ color: 'limegreen' }}>Thanks, we'll be in touch!</p>}
+          {success && <p style={{ color: 'limegreen' }}>Thanks, we&apos;ll be in touch!</p>}
           {error && <p style={{ color: 'red' }}>{error}</p>}
         </form>
         <p style={{ marginTop: 24 }}>Or use the main Zaza Technologies contact page:</p>

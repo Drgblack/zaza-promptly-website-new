@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Target, MessageCircle, Save, Shield, Zap, Palette } from "lucide-react"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
+import Link from 'next/link'
 
 const features = [
   {
@@ -213,15 +215,20 @@ export function FeaturesSection() {
                 Ready to Unlock Your Teaching Superpowers?
               </h3>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of teachers who've transformed their feedback process and reclaimed their time
+                Join thousands of teachers who&apos;ve transformed their feedback process and reclaimed their time
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-10 py-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-lg">
+                <button 
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold px-10 py-5 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 text-lg"
+                  onClick={handleStripeCheckout}
+                >
                   Start Your Free Trial
                 </button>
-                <button className="border-2 border-purple-500 text-purple-600 hover:bg-purple-50 font-semibold px-10 py-5 rounded-full transition-all duration-200 text-lg bg-transparent">
-                  See All Features
-                </button>
+                <Link href="/features">
+                  <button className="border-2 border-purple-500 text-purple-600 hover:bg-purple-50 font-semibold px-10 py-5 rounded-full transition-all duration-200 text-lg bg-transparent">
+                    See All Features
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

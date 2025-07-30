@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState, createContext, useContext } from "react"
+import React, { useEffect, useState, createContext, useContext } from "react"
 
 interface ABTest {
   id: string
@@ -111,18 +111,18 @@ export function ABTestingProvider({ children }: { children: React.ReactNode }) {
   }
 
   // Track conversion
-  const trackConversion = (testId: string, variantId: string, value?: number) => {
-    const test = abTests.find(t => t.id === testId)
+  const trackConversion = (_testId: string, _variantId: string, _value?: number) => {
+    const test = abTests.find(t => t.id === _testId)
     if (!test) return
 
     // Send to analytics
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "ab_test_conversion", {
-        test_id: testId,
+        test_id: _testId,
         test_name: test.name,
-        variant_id: variantId,
-        variant_name: test.variants.find(v => v.id === variantId)?.name,
-        value: value,
+        variant_id: _variantId,
+        variant_name: test.variants.find(v => v.id === _variantId)?.name,
+        value: _value,
         page_url: window.location.href,
         timestamp: Date.now(),
       })
@@ -134,11 +134,11 @@ export function ABTestingProvider({ children }: { children: React.ReactNode }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type: "conversion",
-        testId,
-        testName: test.name,
-        variantId,
-        variantName: test.variants.find(v => v.id === variantId)?.name,
-        value,
+        test_id: _testId,
+        test_name: test.name,
+        variant_id: _variantId,
+        variant_name: test.variants.find(v => v.id === _variantId)?.name,
+        value: _value,
         url: window.location.href,
         timestamp: Date.now(),
       })
@@ -148,19 +148,19 @@ export function ABTestingProvider({ children }: { children: React.ReactNode }) {
   }
 
   // Track custom events
-  const trackEvent = (testId: string, variantId: string, eventName: string, data?: any) => {
-    const test = abTests.find(t => t.id === testId)
+  const trackEvent = (_testId: string, _variantId: string, _eventName: string, _data?: any) => {
+    const test = abTests.find(t => t.id === _testId)
     if (!test) return
 
     // Send to analytics
     if (typeof window !== "undefined" && window.gtag) {
       window.gtag("event", "ab_test_event", {
-        test_id: testId,
+        test_id: _testId,
         test_name: test.name,
-        variant_id: variantId,
-        variant_name: test.variants.find(v => v.id === variantId)?.name,
-        event_name: eventName,
-        event_data: data,
+        variant_id: _variantId,
+        variant_name: test.variants.find(v => v.id === _variantId)?.name,
+        event_name: _eventName,
+        event_data: _data,
         page_url: window.location.href,
         timestamp: Date.now(),
       })
@@ -172,12 +172,12 @@ export function ABTestingProvider({ children }: { children: React.ReactNode }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         type: "event",
-        testId,
-        testName: test.name,
-        variantId,
-        variantName: test.variants.find(v => v.id === variantId)?.name,
-        eventName,
-        eventData: data,
+        test_id: _testId,
+        test_name: test.name,
+        variant_id: _variantId,
+        variant_name: test.variants.find(v => v.id === _variantId)?.name,
+        event_name: _eventName,
+        event_data: _data,
         url: window.location.href,
         timestamp: Date.now(),
       })

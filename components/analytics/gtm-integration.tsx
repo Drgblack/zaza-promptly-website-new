@@ -22,9 +22,9 @@ export function GoogleTagManager({ gtmId, dataLayerName = "dataLayer", auth, pre
     }
   }, [dataLayerName])
 
-  const gtmUrl = `https://www.googletagmanager.com/gtm.js?id=${gtmId}${auth ? `&gtm_auth=${auth}` : ""}${
-    preview ? `&gtm_preview=${preview}` : ""
-  }`
+  // const gtmUrl = `https://www.googletagmanager.com/gtm.js?id=${gtmId}${auth ? `&gtm_auth=${auth}` : ""}${
+  //   preview ? `&gtm_preview=${preview}` : ""
+  // }`
 
   return (
     <>

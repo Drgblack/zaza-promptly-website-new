@@ -3,7 +3,7 @@
 import Head from "next/head"
 
 interface SEOHeadProps {
-  pageType?: "home" | "features" | "pricing" | "about" | "help" | "waitlist" | "blog" | "contact" | "privacy" | "terms" | "faqs" | "support" | "free-resources" | "about-founder" | "vision-mission" | "promptly-faq" | "promptly-pricing"
+  pageType?: "home" | "features" | "pricing" | "about" | "help" | "waitlist" | "blog" | "contact" | "privacy" | "terms" | "faqs" | "support" | "free-resources" | "about-founder" | "vision-mission" | "promptly-faq" | "promptly-pricing" | "stripe_test" | "testimonials"
   title?: string
   description?: string
   image?: string
@@ -71,7 +71,7 @@ const seoContent = {
   contact: {
     title: "Contact Zaza Promptly | Get in Touch - Teacher Support Team",
     description:
-      "Have questions about Zaza Promptly? Contact our team of educators and AI experts. We're here to help you succeed and improve your teaching experience.",
+              "Have questions about Zaza Promptly? Contact our team of educators and AI experts. We&apos;re here to help you succeed and improve your teaching experience.",
     url: "https://zazapromptly.com/contact",
     keywords: "contact Zaza, teacher support, education contact, AI education help, teacher software support, artificial intelligence contact, machine learning support, AI tool contact, artificial intelligence help, machine learning contact, AI education contact, artificial intelligence education support, machine learning education contact, AI teaching contact, educational AI support, artificial intelligence teaching contact, machine learning teaching support, AI tool support, artificial intelligence education contact, machine learning tool help",
   },
@@ -120,7 +120,7 @@ const seoContent = {
   "vision-mission": {
     title: "Vision & Mission | Zaza Promptly - Empowering Teachers Through AI",
     description:
-      "Discover Zaza Promptly's vision and mission to empower teachers through AI technology. We're committed to reducing teacher workload and improving student outcomes.",
+              "Discover Zaza Promptly&apos;s vision and mission to empower teachers through AI technology. We&apos;re committed to reducing teacher workload and improving student outcomes.",
     url: "https://zazapromptly.com/vision-mission",
     keywords: "teacher empowerment, education vision, AI education mission, teacher technology goals, artificial intelligence vision, machine learning mission, AI education goals, artificial intelligence education mission, machine learning education vision, AI teaching mission, artificial intelligence teaching vision, machine learning teaching mission, AI education empowerment, artificial intelligence education empowerment, machine learning education empowerment, AI teaching goals, artificial intelligence teaching goals, machine learning teaching goals, AI education vision, artificial intelligence education goals",
   },
@@ -137,6 +137,20 @@ const seoContent = {
       "Explore Zaza Promptly's transparent pricing plans designed for teachers. Start free and choose the plan that fits your needs and budget.",
     url: "https://zazapromptly.com/promptly-pricing",
     keywords: "Zaza Promptly pricing, teacher AI tool cost, affordable education software, artificial intelligence pricing, machine learning pricing, AI education pricing, artificial intelligence education pricing, machine learning education pricing, AI tool pricing, artificial intelligence tool pricing, machine learning tool pricing, AI teaching pricing, artificial intelligence teaching pricing, machine learning teaching pricing, AI education cost, artificial intelligence education cost, machine learning education cost, AI tool cost, artificial intelligence tool cost, machine learning tool cost",
+  },
+  "stripe_test": {
+    title: "Stripe Integration Test - Zaza Promptly",
+    description:
+      "Test your Stripe checkout integration before going live. Verify payment processing, test cards, and ensure a smooth checkout experience.",
+    url: "https://zazapromptly.com/stripe-test",
+    keywords: "Stripe test, payment integration test, checkout testing, payment processing test, Stripe checkout, payment gateway test, e-commerce testing, payment flow test, Stripe integration, payment system test",
+  },
+  "testimonials": {
+    title: "Teacher Success Stories | Zaza Promptly Testimonials - Real Results",
+    description:
+      "Read inspiring success stories from real teachers who have transformed their teaching with Zaza Promptly. See how AI-powered tools are making a difference in classrooms worldwide.",
+    url: "https://zazapromptly.com/testimonials",
+    keywords: "teacher testimonials, success stories, AI education results, teacher feedback, educational technology success, AI tool reviews, teacher case studies, educational AI testimonials, teacher success stories, AI teaching results, educational technology reviews, teacher testimonials, AI education feedback, educational AI success, teacher case studies, AI tool testimonials, educational technology feedback, teacher success, AI education reviews, educational AI feedback",
   },
 }
 
@@ -402,14 +416,6 @@ export function SEOHead({
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "Contact", url: "https://zazapromptly.com/contact" }
       ],
-      waitlist: [
-        { name: "Home", url: "https://zazapromptly.com" },
-        { name: "Waitlist", url: "https://zazapromptly.com/waitlist" }
-      ],
-      blog: [
-        { name: "Home", url: "https://zazapromptly.com" },
-        { name: "Blog", url: "https://zazapromptly.com/blog" }
-      ],
       faqs: [
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "FAQs", url: "https://zazapromptly.com/faqs" }
@@ -417,14 +423,6 @@ export function SEOHead({
       support: [
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "Support", url: "https://zazapromptly.com/support" }
-      ],
-      privacy: [
-        { name: "Home", url: "https://zazapromptly.com" },
-        { name: "Privacy Policy", url: "https://zazapromptly.com/privacy" }
-      ],
-      terms: [
-        { name: "Home", url: "https://zazapromptly.com" },
-        { name: "Terms of Service", url: "https://zazapromptly.com/terms" }
       ],
       "free-resources": [
         { name: "Home", url: "https://zazapromptly.com" },
@@ -447,6 +445,30 @@ export function SEOHead({
       "promptly-pricing": [
         { name: "Home", url: "https://zazapromptly.com" },
         { name: "Pricing", url: "https://zazapromptly.com/promptly-pricing" }
+      ],
+      waitlist: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Join Waitlist", url: "https://zazapromptly.com/shop" }
+      ],
+      blog: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Blog", url: "https://zazapromptly.com/blog" }
+      ],
+      privacy: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Privacy", url: "https://zazapromptly.com/privacy" }
+      ],
+      terms: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Terms", url: "https://zazapromptly.com/terms" }
+      ],
+      stripe_test: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Stripe Test", url: "https://zazapromptly.com/stripe-test" }
+      ],
+      testimonials: [
+        { name: "Home", url: "https://zazapromptly.com" },
+        { name: "Testimonials", url: "https://zazapromptly.com/testimonials" }
       ]
     }
 

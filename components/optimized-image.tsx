@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 
 interface OptimizedImageProps {
   src: string
@@ -23,7 +24,7 @@ export function OptimizedImage({
   height,
   priority = false,
   sizes = "100vw",
-  quality = 75,
+  // quality = 75,
   placeholder,
   blurDataURL,
 }: OptimizedImageProps) {
@@ -68,16 +69,16 @@ export function OptimizedImage({
       }
 
       // For local images, generate optimized versions
-      const baseUrl = src.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '')
-      const extension = src.match(/\.(jpg|jpeg|png|webp|avif)$/i)?.[1] || 'png'
+      // const baseUrl = src.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '')
+      // const extension = src.match(/\.(jpg|jpeg|png|webp|avif)$/i)?.[1] || 'png'
       
       // Generate responsive image sources
-      const generateSrcSet = (format: string) => {
-        const sizes = [320, 640, 768, 1024, 1280, 1920]
-        return sizes
-          .map(size => `${baseUrl}-${size}w.${format} ${size}w`)
-          .join(', ')
-      }
+      // const generateSrcSet = (format: string) => {
+      //   const sizes = [320, 640, 768, 1024, 1280, 1920]
+      //   return sizes
+      //     .map(size => `${baseUrl}-${size}w.${format} ${size}w`)
+      //     .join(', ')
+      // }
 
       // Set the main image source
       setImageSrc(src)
@@ -102,38 +103,38 @@ export function OptimizedImage({
   }
 
   // Generate WebP and AVIF sources for better compression
-  const generateOptimizedSources = () => {
-    if (!imageSrc || imageSrc.startsWith('data:') || imageSrc.startsWith('http')) {
-      return null
-    }
+  // const generateOptimizedSources = () => {
+  //   if (!imageSrc || imageSrc.startsWith('data:') || imageSrc.startsWith('http')) {
+  //     return null
+  //   }
 
-    const baseUrl = imageSrc.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '')
-    const extension = imageSrc.match(/\.(jpg|jpeg|png|webp|avif)$/i)?.[1] || 'png'
+  //   // const baseUrl = imageSrc.replace(/\.(jpg|jpeg|png|webp|avif)$/i, '')
+  //   // const extension = imageSrc.match(/\.(jpg|jpeg|png|webp|avif)$/i)?.[1] || 'png'
     
-    const sources = []
+  //   const sources = []
     
-    // AVIF source (best compression)
-    if (extension !== 'avif') {
-      sources.push({
-        srcSet: `${baseUrl}.avif`,
-        type: 'image/avif',
-        sizes
-      })
-    }
+  //   // AVIF source (best compression)
+  //   if (extension !== 'avif') {
+  //     sources.push({
+  //       srcSet: `${baseUrl}.avif`,
+  //       type: 'image/avif',
+  //       sizes
+  //     })
+  //   }
     
-    // WebP source (good compression, wide support)
-    if (extension !== 'webp') {
-      sources.push({
-        srcSet: `${baseUrl}.webp`,
-        type: 'image/webp',
-        sizes
-      })
-    }
+  //   // WebP source (good compression, wide support)
+  //   if (extension !== 'webp') {
+  //     sources.push({
+  //       srcSet: `${baseUrl}.webp`,
+  //       type: 'image/webp',
+  //       sizes
+  //     })
+  //   }
 
-    return sources
-  }
+  //   return sources
+  // }
 
-  const optimizedSources = generateOptimizedSources()
+  // const optimizedSources = generateOptimizedSources()
 
   return (
     <div className={`relative overflow-hidden ${className}`} ref={imgRef}>
@@ -145,11 +146,13 @@ export function OptimizedImage({
           aria-hidden="true"
         >
           {blurDataURL && (
-            <img
+            <Image
               src={blurDataURL}
               alt=""
               className="w-full h-full object-cover blur-sm scale-110"
               aria-hidden="true"
+              width={width || 100}
+              height={height || 100}
             />
           )}
         </div>
@@ -171,33 +174,17 @@ export function OptimizedImage({
 
       {/* Optimized image with multiple formats */}
       {isInView && !hasError && (
-        <picture>
-          {optimizedSources?.map((source, index) => (
-            <source
-              key={index}
-              srcSet={source.srcSet}
-              type={source.type}
-              sizes={source.sizes}
-            />
-          ))}
-          <img
-            src={imageSrc || "/placeholder.svg"}
-            alt={alt}
-            className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} ${className}`}
-            width={width}
-            height={height}
-            onLoad={handleLoad}
-            onError={handleError}
-            loading={priority ? "eager" : "lazy"}
-            decoding="async"
-            sizes={sizes}
-            crossOrigin="anonymous"
-            style={{
-              width: width ? `${width}px` : 'auto',
-              height: height ? `${height}px` : 'auto',
-            }}
-          />
-        </picture>
+        <Image
+          src={imageSrc || "/placeholder.svg"}
+          alt={alt}
+          className={`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"} ${className}`}
+          width={width || 100}
+          height={height || 100}
+          onLoad={handleLoad}
+          onError={handleError}
+          priority={priority}
+          sizes={sizes}
+        />
       )}
     </div>
   )

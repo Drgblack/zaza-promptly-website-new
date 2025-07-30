@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { SecurityHeaders } from '@/components/security-headers'
+import Header from '@/components/Header'
+import Footer from '@/components/footer'
 import './globals.css'
 import { UserFeedback } from '@/components/user-feedback'
 
@@ -99,15 +101,18 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.google-analytics.com" />
         
         {/* PWA Icons */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" href="/zaza-logo.png" />
+        <link rel="apple-touch-icon" href="/zaza-logo.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
         <ErrorBoundary>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
-            {children}
+            <Header />
+            <div className="pt-16 lg:pt-20">
+              {children}
+            </div>
+            <Footer />
           </ThemeProvider>
         </ErrorBoundary>
         <SecurityHeaders />

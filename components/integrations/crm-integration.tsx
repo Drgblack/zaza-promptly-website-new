@@ -1,35 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { 
   Users, 
   Mail, 
   Phone, 
   Calendar, 
-  MapPin, 
   Building, 
-  Star, 
   MessageSquare, 
-  FileText, 
-  Settings,
   Plus,
   Search,
-  Filter,
-  Download,
-  Upload,
-  RefreshCw,
-  CheckCircle,
-  AlertCircle,
-  Clock
+  RefreshCw
 } from "lucide-react"
 
 interface Contact {
@@ -63,9 +51,9 @@ interface Interaction {
 }
 
 interface CRMIntegrationProps {
-  onContactUpdate?: (contact: Contact) => void
-  onInteractionAdd?: (interaction: Interaction) => void
-  onSync?: () => void
+  // onContactUpdate?: (contact: Contact) => void
+  // onInteractionAdd?: (interaction: Interaction) => void
+  // onSync?: () => void
 }
 
 const mockContacts: Contact[] = [
@@ -158,9 +146,9 @@ const mockInteractions: Interaction[] = [
   }
 ]
 
-export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CRMIntegrationProps) {
-  const [contacts, setContacts] = useState<Contact[]>(mockContacts)
-  const [interactions, setInteractions] = useState<Interaction[]>(mockInteractions)
+export function CRMIntegration({ /* onContactUpdate, onInteractionAdd, onSync */ }: CRMIntegrationProps) {
+  const [contacts] = useState<Contact[]>(mockContacts)
+  // const [interactions, setInteractions] = useState<Interaction[]>(mockInteractions)
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
@@ -201,7 +189,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
     try {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
-      onSync?.()
+      // onSync?.()
     } catch (error) {
       console.error("Sync failed:", error)
     } finally {
@@ -214,7 +202,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
   }
 
   const getContactInteractions = (contactId: string) => {
-    return interactions.filter(interaction => interaction.contactId === contactId)
+    return [] // interactions.filter(interaction => interaction.contactId === contactId)
   }
 
   return (
@@ -432,7 +420,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
               </Card>
 
               {/* Interactions */}
-              <Card>
+              {/* <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <MessageSquare className="w-5 h-5" />
@@ -479,7 +467,7 @@ export function CRMIntegration({ onContactUpdate, onInteractionAdd, onSync }: CR
                     ))}
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           ) : (
             <Card>

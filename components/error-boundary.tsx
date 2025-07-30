@@ -86,7 +86,7 @@ function DefaultErrorFallback({ error, resetError }: { error: Error; resetError:
         </h1>
         
         <p className="text-gray-600 mb-6 leading-relaxed">
-          We're sorry for the inconvenience. Our team has been notified and is working to fix this issue.
+          We&apos;re sorry for the inconvenience. Our team has been notified and is working to fix this issue.
         </p>
 
         {process.env.NODE_ENV === 'development' && (

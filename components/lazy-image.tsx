@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import Image from "next/image"
 
 interface LazyImageProps {
   src: string
@@ -46,7 +47,7 @@ export function LazyImage({ src, alt, className = "", width, height, placeholder
       {!isLoaded && <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" style={{ width, height }} />}
 
       {/* Actual Image */}
-      <img
+                      <Image
         ref={imgRef}
         src={isInView ? src : placeholder || "/placeholder.svg"}
         alt={alt}

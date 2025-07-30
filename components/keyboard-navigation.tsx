@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react"
 
 interface KeyboardNavigationProps {
   children: React.ReactNode
-  onNavigate?: (direction: "up" | "down" | "left" | "right") => void
+  onNavigate?: (_direction: "up" | "down" | "left" | "right") => void
   onSelect?: () => void
   onEscape?: () => void
-  onTab?: (direction: "forward" | "backward") => void
+  onTab?: (_direction: "forward" | "backward") => void
 }
 
 export function KeyboardNavigation({ 
@@ -18,7 +18,7 @@ export function KeyboardNavigation({
   onTab 
 }: KeyboardNavigationProps) {
   const [isKeyboardMode, setIsKeyboardMode] = useState(false)
-  const [focusedElement, setFocusedElement] = useState<HTMLElement | null>(null)
+  // const [focusedElement, setFocusedElement] = useState<HTMLElement | null>(null)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -67,8 +67,8 @@ export function KeyboardNavigation({
       setIsKeyboardMode(false)
     }
 
-    const handleFocus = (event: FocusEvent) => {
-      setFocusedElement(event.target as HTMLElement)
+    const handleFocus = (_event: FocusEvent) => {
+      // setFocusedElement(event.target as HTMLElement)
     }
 
     document.addEventListener("keydown", handleKeyDown)
@@ -185,7 +185,7 @@ export function FocusableElement({
       onFocus={handleFocus}
       onBlur={onBlur}
       className={`focusable-element focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${className}`}
-      role={role}
+      role={role || undefined}
       aria-label={ariaLabel}
       aria-describedby={ariaDescribedby}
     >

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 const painPoints = [
   {
     emoji: "📚",
-    text: "It's 10 PM and you're still writing report cards",
+            text: "It&apos;s 10 PM and you&apos;re still writing report cards",
     delay: 0,
   },
   {
@@ -15,7 +15,7 @@ const painPoints = [
   },
   {
     emoji: "😰",
-    text: "Parents deserve better, but you're out of words",
+            text: "Parents deserve better, but you&apos;re out of words",
     delay: 400,
   },
   {

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { BrevoForm } from "@/components/brevo-form"
+import { handleStripeCheckout } from "@/utils/stripe-checkout"
 import {
   Users,
   MapPin,
@@ -16,24 +18,25 @@ import {
   Database,
   FileText,
 } from "lucide-react"
-import { useFormSubmission } from '../hooks/useFormSubmission';
+import Link from 'next/link'
 
-const urgencyStats = [
-  {
-    label: "Teachers joined today",
-    baseValue: 1247,
-    suffix: " (and counting)",
-    icon: Users,
-    color: "from-blue-500 to-cyan-500",
-  },
-  {
-    label: "Schools across 50 states",
-    baseValue: 2847,
-    suffix: "",
-    icon: MapPin,
-    color: "from-green-500 to-emerald-500",
-  },
-]
+
+// const urgencyStats = [
+//   {
+//     label: "Teachers joined today",
+//     baseValue: 1247,
+//     suffix: " (and counting)",
+//     icon: Users,
+//     color: "from-blue-500 to-cyan-500",
+//   },
+//   {
+//     label: "Schools across 50 states",
+//     baseValue: 2847,
+//     suffix: "",
+//     icon: MapPin,
+//     color: "from-green-500 to-emerald-500",
+//   },
+// ]
 
 const guarantees = [
   {
@@ -71,27 +74,25 @@ export function FinalCTASection() {
   const [lastActivity, setLastActivity] = useState(3)
   const [sectionVisible, setSectionVisible] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const { submitForm, loading, success, error } = useFormSubmission();
-  const [email, setEmail] = useState('');
 
   // Hydration-safe formatted numbers
-  const [formattedTeachers, setFormattedTeachers] = useState('1247')
-  const [formattedSchools, setFormattedSchools] = useState('2847')
-  const [mounted, setMounted] = useState(false)
+  // const [formattedTeachers, setFormattedTeachers] = useState('1247')
+  // const [formattedSchools, setFormattedSchools] = useState('2847')
+  // const [mounted, setMounted] = useState(false)
 
   // Consistent number formatting function
-  const formatNumber = (num: number) => {
-    return num.toLocaleString('en-US')
-  }
+  // const formatNumber = (num: number) => {
+  //   return num.toLocaleString('en-US')
+  // }
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // useEffect(() => {
+  //   setMounted(true)
+  // }, [])
 
-  useEffect(() => {
-    setFormattedTeachers(teachersCount.toLocaleString('en-US'))
-    setFormattedSchools(schoolsCount.toLocaleString('en-US'))
-  }, [teachersCount, schoolsCount])
+  // useEffect(() => {
+  //   setFormattedTeachers(teachersCount.toLocaleString('en-US'))
+  //   setFormattedSchools(schoolsCount.toLocaleString('en-US'))
+  // }, [teachersCount, schoolsCount])
 
   // Live counters and activity simulation
   useEffect(() => {
@@ -224,7 +225,7 @@ export function FinalCTASection() {
           <div className="flex items-center space-x-3 text-center justify-center">
             <AlertCircle className="w-6 h-6 text-red-400" />
             <p className="text-white font-semibold text-lg">
-              We're limiting new users to ensure quality. Join now while spots are available.
+              We&apos;re limiting new users to ensure quality. Join now while spots are available.
             </p>
           </div>
         </div>
@@ -248,45 +249,30 @@ export function FinalCTASection() {
             sectionVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <Button className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 hover:from-orange-600 hover:via-pink-600 hover:to-red-600 text-white font-bold px-12 py-6 text-xl rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200">
+          <Button 
+            className="bg-gradient-to-r from-orange-500 via-pink-500 to-red-500 hover:from-orange-600 hover:via-pink-600 hover:to-red-600 text-white font-bold px-12 py-6 text-xl rounded-full shadow-2xl transform hover:scale-105 transition-all duration-200"
+            onClick={handleStripeCheckout}
+          >
             Start My Transformation
           </Button>
-          <Button
-            variant="outline"
-            className="border-2 border-white text-white hover:bg-white hover:text-purple-900 font-semibold px-12 py-6 text-xl rounded-full bg-transparent backdrop-blur-sm"
-          >
-            See Pricing
-          </Button>
+          <Link href="/pricing">
+            <Button
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-white hover:text-purple-900 font-semibold px-12 py-6 text-xl rounded-full bg-transparent backdrop-blur-sm"
+            >
+              See Pricing
+            </Button>
+          </Link>
         </div>
 
         {/* Newsletter Signup Form */}
         <div className="mt-16 mb-20 flex flex-col items-center">
-          <form
-            className="flex flex-col sm:flex-row gap-4 items-center w-full max-w-md"
-            onSubmit={e => {
-              e.preventDefault();
-              submitForm({ email }, 'newsletter');
-            }}
-          >
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder="Sign up for updates"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              className="flex-1 px-6 py-4 rounded-xl text-gray-800 bg-white/90 backdrop-blur-sm border-2 border-white/30 focus:border-white focus:outline-none text-base placeholder-gray-600"
-            />
-            <button 
-              type="submit" 
-              disabled={loading} 
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            >
-              {loading ? 'Signing up...' : 'Subscribe'}
-            </button>
-          </form>
-          {success && <p className="text-green-300 mt-4 font-medium">Thanks, you're signed up!</p>}
-          {error && <p className="text-red-300 mt-4 font-medium">{error}</p>}
+          <BrevoForm 
+            placeholder="Enter your email to stay updated"
+            buttonText="Stay Updated"
+            listId="2"
+            className=""
+          />
         </div>
 
         {/* Guarantee Section */}
