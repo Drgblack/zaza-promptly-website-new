@@ -1,8 +1,8 @@
 // lib/stripe.ts
 import Stripe from "stripe";
 
-export function getStripe() {
+export function getStripe(): Stripe | null {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) return null;
-  return new Stripe(key); // <-- no apiVersion
+  return new Stripe(key);
 }
